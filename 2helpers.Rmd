@@ -20,20 +20,22 @@ to have access to the arguments `gradients_num`, `arraynum`, `arraynum_max`, and
 
 
 ```{r}
-##' Parse command line arguments and assigns the values of them. |args| is meant
-##' to just be additional command line arguments.
-##'
-##' @param args Argument.
-##'
-##' @examples \dontrun{parse_args(args = commandArgs(trailingOnly = TRUE))}
-##'
+#' Parse command line arguments and assigns the values of them. |args| is meant
+#' to just be additional command line arguments.
+#'
+#' @param args Argument.
+#' @param verbose Whether to be loud
+#'
+#' @examples \dontrun{parse_args(args = commandArgs(trailingOnly = TRUE))}
+#'
+#' @export
 parse_args <- function(args, verbose=FALSE){
   args = sapply(args, strsplit, "=")
   print(args)
   for(arg in args){
 
     ## Check if the thing is integer
-    all_numbers = str_detect(arg[2], "^[:digit:]+$")
+    all_numbers = stringr::str_detect(arg[2], "^[:digit:]+$")
     print(all_numbers)
 
     ## Assign the variable
@@ -57,11 +59,11 @@ parse_args <- function(args, verbose=FALSE){
 
 
 ```{r}
-##' Creates a directory \code{destin}, if it doesn't already exist.
-##'
-##' @param destin Destination directory.
-##'
-##' @export
+#' Creates a directory \code{destin}, if it doesn't already exist.
+#'
+#' @param destin Destination directory.
+#'
+#' @export
 create_destin <- function(destin){
   if(!dir.exists(destin)){
     dir.create(destin, recursive = TRUE)
@@ -81,13 +83,13 @@ to run.
 For instance, `flowmix::make_iimat()` makes a long matrix whose rows look like this:
 
 ```{}
-##' ind ialpha ibeta ifold irep
-##'  55      6     1     2    1
-##'  56      7     1     2    1
-##'  57      1     2     2    1
-##'  58      2     2     2    1
-##'  59      3     2     2    1
-##'  60      4     2     2    1
+#' ind ialpha ibeta ifold irep
+#'  55      6     1     2    1
+#'  56      7     1     2    1
+#'  57      1     2     2    1
+#'  58      2     2     2    1
+#'  59      3     2     2    1
+#'  60      4     2     2    1
 ```
 And `flowtrend::make_iimat()` makes a matrix whose rows look like this:
 
@@ -106,14 +108,14 @@ The helper function `make_iilist()` will help you divide this into
 want SLURM to help you get `arraynum_max==100` cores to run these jobs.
 
 ```{r}
-##' Helper to divide up the jobs in \code{iimat} into a total of
-##' \code{arraynum_max} jobs. The purpose is to divide the jobs, in order to run
-##' this on a server.
-##'
-##' @param arraynum_max Maximum SLURM array number.
-##' @param iimat matrix whose rows contain CV job indices.
-##'
-##' @export
+#' Helper to divide up the jobs in \code{iimat} into a total of
+#' \code{arraynum_max} jobs. The purpose is to divide the jobs, in order to run
+#' this on a server.
+#'
+#' @param arraynum_max Maximum SLURM array number.
+#' @param iimat matrix whose rows contain CV job indices.
+#'
+#' @export
 make_iilist <- function(arraynum_max, iimat){
   iimax = nrow(iimat)
   if(arraynum_max > iimax){

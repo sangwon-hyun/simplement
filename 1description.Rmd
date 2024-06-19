@@ -36,10 +36,11 @@ the console.
 This package will have some dependancies:
 
 ```{r dependencies, message = FALSE}
-library(tidyverse)
-library(ggplot2)
-usethis::use_package("tidyverse", type = "depends") 
-usethis::use_package("ggplot2")
+## library(tidyverse)
+## library(ggplot2)
+## usethis::use_package("tidyverse") 
+## usethis::use_package("ggplot2")
+usethis::use_package("stringr")
 usethis::use_pipe()
 ```
 

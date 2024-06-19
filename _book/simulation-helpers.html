@@ -148,46 +148,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Then, the R script <code>gradients.R</code> can include this:</p>
 <p><code><a href="simulation-helpers.html#parse_args">parse_args</a>(args = commandArgs(trailingOnly = TRUE), verbose=TRUE)</code></p>
 <p>to have access to the arguments <code>gradients_num</code>, <code>arraynum</code>, <code>arraynum_max</code>, and <code>summ</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="simulation-helpers.html#cb6-1" tabindex="-1"></a><span class="do">##' Parse command line arguments and assigns the values of them. |args| is meant</span></span>
-<span id="cb6-2"><a href="simulation-helpers.html#cb6-2" tabindex="-1"></a><span class="do">##' to just be additional command line arguments.</span></span>
-<span id="cb6-3"><a href="simulation-helpers.html#cb6-3" tabindex="-1"></a><span class="do">##'</span></span>
-<span id="cb6-4"><a href="simulation-helpers.html#cb6-4" tabindex="-1"></a><span class="do">##' @param args Argument.</span></span>
-<span id="cb6-5"><a href="simulation-helpers.html#cb6-5" tabindex="-1"></a><span class="do">##'</span></span>
-<span id="cb6-6"><a href="simulation-helpers.html#cb6-6" tabindex="-1"></a><span class="do">##' @examples \dontrun{<a href="simulation-helpers.html#parse_args">parse_args</a>(args = commandArgs(trailingOnly = TRUE))}</span></span>
-<span id="cb6-7"><a href="simulation-helpers.html#cb6-7" tabindex="-1"></a><span class="do">##'</span></span>
-<span id="cb6-8"><a href="simulation-helpers.html#cb6-8" tabindex="-1"></a><span id="parse_args">parse_args</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(args, <span class="at">verbose=</span><span class="cn">FALSE</span>){</span>
-<span id="cb6-9"><a href="simulation-helpers.html#cb6-9" tabindex="-1"></a>  args <span class="ot">=</span> <span class="fu">sapply</span>(args, strsplit, <span class="st">"="</span>)</span>
-<span id="cb6-10"><a href="simulation-helpers.html#cb6-10" tabindex="-1"></a>  <span class="fu">print</span>(args)</span>
-<span id="cb6-11"><a href="simulation-helpers.html#cb6-11" tabindex="-1"></a>  <span class="cf">for</span>(arg <span class="cf">in</span> args){</span>
-<span id="cb6-12"><a href="simulation-helpers.html#cb6-12" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="simulation-helpers.html#cb6-13" tabindex="-1"></a>    <span class="do">## Check if the thing is integer</span></span>
-<span id="cb6-14"><a href="simulation-helpers.html#cb6-14" tabindex="-1"></a>    all_numbers <span class="ot">=</span> <span class="fu">str_detect</span>(arg[<span class="dv">2</span>], <span class="st">"^[:digit:]+$"</span>)</span>
-<span id="cb6-15"><a href="simulation-helpers.html#cb6-15" tabindex="-1"></a>    <span class="fu">print</span>(all_numbers)</span>
-<span id="cb6-16"><a href="simulation-helpers.html#cb6-16" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="simulation-helpers.html#cb6-17" tabindex="-1"></a>    <span class="do">## Assign the variable</span></span>
-<span id="cb6-18"><a href="simulation-helpers.html#cb6-18" tabindex="-1"></a>    <span class="cf">if</span>(all_numbers){</span>
-<span id="cb6-19"><a href="simulation-helpers.html#cb6-19" tabindex="-1"></a>      <span class="fu">assign</span>(arg[<span class="dv">1</span>], <span class="fu">as.numeric</span>(arg[<span class="dv">2</span>]), <span class="at">inherits =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-20"><a href="simulation-helpers.html#cb6-20" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb6-21"><a href="simulation-helpers.html#cb6-21" tabindex="-1"></a>      <span class="fu">assign</span>(arg[<span class="dv">1</span>], arg[<span class="dv">2</span>], <span class="at">inherits =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-22"><a href="simulation-helpers.html#cb6-22" tabindex="-1"></a>    }</span>
-<span id="cb6-23"><a href="simulation-helpers.html#cb6-23" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="simulation-helpers.html#cb6-24" tabindex="-1"></a>    <span class="cf">if</span>(verbose){</span>
-<span id="cb6-25"><a href="simulation-helpers.html#cb6-25" tabindex="-1"></a>      <span class="fu">cat</span>(arg[<span class="dv">1</span>], <span class="st">"takes the value of"</span>, arg[<span class="dv">2</span>],</span>
-<span id="cb6-26"><a href="simulation-helpers.html#cb6-26" tabindex="-1"></a>          <span class="st">"from command line input"</span>, <span class="at">fill=</span><span class="cn">TRUE</span>)</span>
-<span id="cb6-27"><a href="simulation-helpers.html#cb6-27" tabindex="-1"></a>    }</span>
-<span id="cb6-28"><a href="simulation-helpers.html#cb6-28" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"==============================="</span>)</span>
-<span id="cb6-29"><a href="simulation-helpers.html#cb6-29" tabindex="-1"></a>  }</span>
-<span id="cb6-30"><a href="simulation-helpers.html#cb6-30" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="simulation-helpers.html#cb6-1" tabindex="-1"></a><span class="co">#' Parse command line arguments and assigns the values of them. |args| is meant</span></span>
+<span id="cb6-2"><a href="simulation-helpers.html#cb6-2" tabindex="-1"></a><span class="co">#' to just be additional command line arguments.</span></span>
+<span id="cb6-3"><a href="simulation-helpers.html#cb6-3" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-4"><a href="simulation-helpers.html#cb6-4" tabindex="-1"></a><span class="co">#' @param args Argument.</span></span>
+<span id="cb6-5"><a href="simulation-helpers.html#cb6-5" tabindex="-1"></a><span class="co">#' @param verbose Whether to be loud</span></span>
+<span id="cb6-6"><a href="simulation-helpers.html#cb6-6" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-7"><a href="simulation-helpers.html#cb6-7" tabindex="-1"></a><span class="co">#' @examples \dontrun{<a href="simulation-helpers.html#parse_args">parse_args</a>(args = commandArgs(trailingOnly = TRUE))}</span></span>
+<span id="cb6-8"><a href="simulation-helpers.html#cb6-8" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-9"><a href="simulation-helpers.html#cb6-9" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb6-10"><a href="simulation-helpers.html#cb6-10" tabindex="-1"></a><span id="parse_args">parse_args</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(args, <span class="at">verbose=</span><span class="cn">FALSE</span>){</span>
+<span id="cb6-11"><a href="simulation-helpers.html#cb6-11" tabindex="-1"></a>  args <span class="ot">=</span> <span class="fu">sapply</span>(args, strsplit, <span class="st">"="</span>)</span>
+<span id="cb6-12"><a href="simulation-helpers.html#cb6-12" tabindex="-1"></a>  <span class="fu">print</span>(args)</span>
+<span id="cb6-13"><a href="simulation-helpers.html#cb6-13" tabindex="-1"></a>  <span class="cf">for</span>(arg <span class="cf">in</span> args){</span>
+<span id="cb6-14"><a href="simulation-helpers.html#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="simulation-helpers.html#cb6-15" tabindex="-1"></a>    <span class="do">## Check if the thing is integer</span></span>
+<span id="cb6-16"><a href="simulation-helpers.html#cb6-16" tabindex="-1"></a>    all_numbers <span class="ot">=</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(arg[<span class="dv">2</span>], <span class="st">"^[:digit:]+$"</span>)</span>
+<span id="cb6-17"><a href="simulation-helpers.html#cb6-17" tabindex="-1"></a>    <span class="fu">print</span>(all_numbers)</span>
+<span id="cb6-18"><a href="simulation-helpers.html#cb6-18" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="simulation-helpers.html#cb6-19" tabindex="-1"></a>    <span class="do">## Assign the variable</span></span>
+<span id="cb6-20"><a href="simulation-helpers.html#cb6-20" tabindex="-1"></a>    <span class="cf">if</span>(all_numbers){</span>
+<span id="cb6-21"><a href="simulation-helpers.html#cb6-21" tabindex="-1"></a>      <span class="fu">assign</span>(arg[<span class="dv">1</span>], <span class="fu">as.numeric</span>(arg[<span class="dv">2</span>]), <span class="at">inherits =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-22"><a href="simulation-helpers.html#cb6-22" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb6-23"><a href="simulation-helpers.html#cb6-23" tabindex="-1"></a>      <span class="fu">assign</span>(arg[<span class="dv">1</span>], arg[<span class="dv">2</span>], <span class="at">inherits =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-24"><a href="simulation-helpers.html#cb6-24" tabindex="-1"></a>    }</span>
+<span id="cb6-25"><a href="simulation-helpers.html#cb6-25" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="simulation-helpers.html#cb6-26" tabindex="-1"></a>    <span class="cf">if</span>(verbose){</span>
+<span id="cb6-27"><a href="simulation-helpers.html#cb6-27" tabindex="-1"></a>      <span class="fu">cat</span>(arg[<span class="dv">1</span>], <span class="st">"takes the value of"</span>, arg[<span class="dv">2</span>],</span>
+<span id="cb6-28"><a href="simulation-helpers.html#cb6-28" tabindex="-1"></a>          <span class="st">"from command line input"</span>, <span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb6-29"><a href="simulation-helpers.html#cb6-29" tabindex="-1"></a>    }</span>
+<span id="cb6-30"><a href="simulation-helpers.html#cb6-30" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"==============================="</span>)</span>
+<span id="cb6-31"><a href="simulation-helpers.html#cb6-31" tabindex="-1"></a>  }</span>
+<span id="cb6-32"><a href="simulation-helpers.html#cb6-32" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="helper-to-create-a-folder-if-it-doesnt-exist." class="section level2 hasAnchor" number="3.2">
 <h2>
 <span class="header-section-number">3.2</span> Helper to create a folder if it doesn’t exist.<a href="simulation-helpers.html#helper-to-create-a-folder-if-it-doesnt-exist." class="anchor-section" aria-label="Anchor link to header"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="simulation-helpers.html#cb7-1" tabindex="-1"></a><span class="do">##' Creates a directory \code{destin}, if it doesn't already exist.</span></span>
-<span id="cb7-2"><a href="simulation-helpers.html#cb7-2" tabindex="-1"></a><span class="do">##'</span></span>
-<span id="cb7-3"><a href="simulation-helpers.html#cb7-3" tabindex="-1"></a><span class="do">##' @param destin Destination directory.</span></span>
-<span id="cb7-4"><a href="simulation-helpers.html#cb7-4" tabindex="-1"></a><span class="do">##'</span></span>
-<span id="cb7-5"><a href="simulation-helpers.html#cb7-5" tabindex="-1"></a><span class="do">##' @export</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="simulation-helpers.html#cb7-1" tabindex="-1"></a><span class="co">#' Creates a directory \code{destin}, if it doesn't already exist.</span></span>
+<span id="cb7-2"><a href="simulation-helpers.html#cb7-2" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb7-3"><a href="simulation-helpers.html#cb7-3" tabindex="-1"></a><span class="co">#' @param destin Destination directory.</span></span>
+<span id="cb7-4"><a href="simulation-helpers.html#cb7-4" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb7-5"><a href="simulation-helpers.html#cb7-5" tabindex="-1"></a><span class="co">#' @export</span></span>
 <span id="cb7-6"><a href="simulation-helpers.html#cb7-6" tabindex="-1"></a><span id="create_destin">create_destin</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(destin){</span>
 <span id="cb7-7"><a href="simulation-helpers.html#cb7-7" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(destin)){</span>
 <span id="cb7-8"><a href="simulation-helpers.html#cb7-8" tabindex="-1"></a>    <span class="fu">dir.create</span>(destin, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
@@ -204,13 +206,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Take a long matrix <code>iimat</code> whose rows encode the configuration of jobs you want
 to run.</p>
 <p>For instance, <code>flowmix::make_iimat()</code> makes a long matrix whose rows look like this:</p>
-<pre><code>##' ind ialpha ibeta ifold irep
-##'  55      6     1     2    1
-##'  56      7     1     2    1
-##'  57      1     2     2    1
-##'  58      2     2     2    1
-##'  59      3     2     2    1
-##'  60      4     2     2    1</code></pre>
+<pre><code>#' ind ialpha ibeta ifold irep
+#'  55      6     1     2    1
+#'  56      7     1     2    1
+#'  57      1     2     2    1
+#'  58      2     2     2    1
+#'  59      3     2     2    1
+#'  60      4     2     2    1</code></pre>
 <p>And <code>flowtrend::make_iimat()</code> makes a matrix whose rows look like this:</p>
 <pre><code>#' ind    iprob  imu ifold irestart
 #'  55      6     1     2    1 
@@ -222,14 +224,14 @@ to run.</p>
 <p>The helper function <code><a href="simulation-helpers.html#make_iilist">make_iilist</a>()</code> will help you divide this into
 <code>arraynum_max</code> jobs. This is useful if you are running many pre-defined jobs and
 want SLURM to help you get <code>arraynum_max==100</code> cores to run these jobs.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="simulation-helpers.html#cb10-1" tabindex="-1"></a><span class="do">##' Helper to divide up the jobs in \code{iimat} into a total of</span></span>
-<span id="cb10-2"><a href="simulation-helpers.html#cb10-2" tabindex="-1"></a><span class="do">##' \code{arraynum_max} jobs. The purpose is to divide the jobs, in order to run</span></span>
-<span id="cb10-3"><a href="simulation-helpers.html#cb10-3" tabindex="-1"></a><span class="do">##' this on a server.</span></span>
-<span id="cb10-4"><a href="simulation-helpers.html#cb10-4" tabindex="-1"></a><span class="do">##'</span></span>
-<span id="cb10-5"><a href="simulation-helpers.html#cb10-5" tabindex="-1"></a><span class="do">##' @param arraynum_max Maximum SLURM array number.</span></span>
-<span id="cb10-6"><a href="simulation-helpers.html#cb10-6" tabindex="-1"></a><span class="do">##' @param iimat matrix whose rows contain CV job indices.</span></span>
-<span id="cb10-7"><a href="simulation-helpers.html#cb10-7" tabindex="-1"></a><span class="do">##'</span></span>
-<span id="cb10-8"><a href="simulation-helpers.html#cb10-8" tabindex="-1"></a><span class="do">##' @export</span></span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="simulation-helpers.html#cb10-1" tabindex="-1"></a><span class="co">#' Helper to divide up the jobs in \code{iimat} into a total of</span></span>
+<span id="cb10-2"><a href="simulation-helpers.html#cb10-2" tabindex="-1"></a><span class="co">#' \code{arraynum_max} jobs. The purpose is to divide the jobs, in order to run</span></span>
+<span id="cb10-3"><a href="simulation-helpers.html#cb10-3" tabindex="-1"></a><span class="co">#' this on a server.</span></span>
+<span id="cb10-4"><a href="simulation-helpers.html#cb10-4" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-5"><a href="simulation-helpers.html#cb10-5" tabindex="-1"></a><span class="co">#' @param arraynum_max Maximum SLURM array number.</span></span>
+<span id="cb10-6"><a href="simulation-helpers.html#cb10-6" tabindex="-1"></a><span class="co">#' @param iimat matrix whose rows contain CV job indices.</span></span>
+<span id="cb10-7"><a href="simulation-helpers.html#cb10-7" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb10-8"><a href="simulation-helpers.html#cb10-8" tabindex="-1"></a><span class="co">#' @export</span></span>
 <span id="cb10-9"><a href="simulation-helpers.html#cb10-9" tabindex="-1"></a><span id="make_iilist">make_iilist</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(arraynum_max, iimat){</span>
 <span id="cb10-10"><a href="simulation-helpers.html#cb10-10" tabindex="-1"></a>  iimax <span class="ot">=</span> <span class="fu">nrow</span>(iimat)</span>
 <span id="cb10-11"><a href="simulation-helpers.html#cb10-11" tabindex="-1"></a>  <span class="cf">if</span>(arraynum_max <span class="sc">&gt;</span> iimax){</span>

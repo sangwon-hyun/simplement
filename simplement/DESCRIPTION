@@ -8,10 +8,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Depends: 
-    tidyverse
 Imports: 
-    ggplot2,
-    magrittr
+    magrittr,
+    stringr
 LitrVersionUsed: 0.9.2
-LitrId: fcf8bbe231cb80188baf7b75ffbe2655
+LitrId: 1a2848fd8f2dd7c10bd6ec1189b9fbca
