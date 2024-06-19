@@ -1,0 +1,34 @@
+---
+title: "Creating the ``r params$package_name`` R package"
+author: "Sangwon Hyun"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+knit: litr::render
+output: litr::litr_gitbook
+params:
+  package_name: "simplement" # <-- change this to your package name
+  package_parent_dir: "." # <-- relative to this file's location
+documentclass: book
+---
+
+# Introduction
+
+This package implements `simplement`, an R package with some commonly used
+simulation and implementation helpers.  The documentation and package are both
+created using one simple command:
+
+```{r render, eval = FALSE}
+litr::render("index.Rmd", output_format = litr::litr_gitbook())
+```
+
+
+```{r, eval = FALSE, echo = FALSE}
+litr::load_all("index.Rmd")##, output_format = litr::litr_gitbook())
+my_load <- function(){
+  litr::render("~/repos/simplement/index.Rmd", output_format = litr::litr_gitbook(minimal_eval = TRUE))
+  devtools::load_all("~/repos/simplement/simplement")
+}
+my_load()
+```
+
+

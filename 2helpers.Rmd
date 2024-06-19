@@ -1,0 +1,131 @@
+# Simulation helpers
+
+## Helper to parse arguments from the command line
+
+We'll define a function called `parse_args()` to parse trailing arguments to `Rscript`. Let's say we ran something like  this:
+
+```{sh, eval = FALSE}
+Rscript gradients.R\
+	gradients_num=1\
+	arraynum=$SLURM_ARRAY_TASK_ID\
+	arraynum_max=$SLURM_ARRAY_TASK_MAX\
+	summ=1
+exit 0
+```
+Then, the R script `gradients.R` can include this:
+
+`parse_args(args = commandArgs(trailingOnly = TRUE), verbose=TRUE)`
+
+to have access to the arguments `gradients_num`, `arraynum`, `arraynum_max`, and `summ`.
+
+
+```{r}
+##' Parse command line arguments and assigns the values of them. |args| is meant
+##' to just be additional command line arguments.
+##'
+##' @param args Argument.
+##'
+##' @examples \dontrun{parse_args(args = commandArgs(trailingOnly = TRUE))}
+##'
+parse_args <- function(args, verbose=FALSE){
+  args = sapply(args, strsplit, "=")
+  print(args)
+  for(arg in args){
+
+    ## Check if the thing is integer
+    all_numbers = str_detect(arg[2], "^[:digit:]+$")
+    print(all_numbers)
+
+    ## Assign the variable
+    if(all_numbers){
+      assign(arg[1], as.numeric(arg[2]), inherits = TRUE)
+    } else {
+      assign(arg[1], arg[2], inherits = TRUE)
+    }
+
+    if(verbose){
+      cat(arg[1], "takes the value of", arg[2],
+          "from command line input", fill=TRUE)
+    }
+    print("===============================")
+  }
+}
+```
+
+
+## Helper to create a folder if it doesn't exist.
+
+
+```{r}
+##' Creates a directory \code{destin}, if it doesn't already exist.
+##'
+##' @param destin Destination directory.
+##'
+##' @export
+create_destin <- function(destin){
+  if(!dir.exists(destin)){
+    dir.create(destin, recursive = TRUE)
+    cat("Creating destin: ", destin, fill=TRUE)
+  } else {
+    cat("All output goes out to destin: ", destin, fill = TRUE)
+  }
+}
+
+```
+
+## Helper to divide jobs into 'chunks'
+
+Take a long matrix `iimat` whose rows encode the configuration of jobs you want
+to run. 
+
+For instance, `flowmix::make_iimat()` makes a long matrix whose rows look like this:
+
+```{}
+##' ind ialpha ibeta ifold irep
+##'  55      6     1     2    1
+##'  56      7     1     2    1
+##'  57      1     2     2    1
+##'  58      2     2     2    1
+##'  59      3     2     2    1
+##'  60      4     2     2    1
+```
+And `flowtrend::make_iimat()` makes a matrix whose rows look like this:
+
+```{}
+#' ind    iprob  imu ifold irestart
+#'  55      6     1     2    1 
+#'  56      7     1     2    1
+#'  57      1     2     2    1
+#'  58      2     2     2    1
+#'  59      3     2     2    1
+#'  60      4     2     2    1
+```
+
+The helper function `make_iilist()` will help you divide this into
+`arraynum_max` jobs. This is useful if you are running many pre-defined jobs and
+want SLURM to help you get `arraynum_max==100` cores to run these jobs.
+
+```{r}
+##' Helper to divide up the jobs in \code{iimat} into a total of
+##' \code{arraynum_max} jobs. The purpose is to divide the jobs, in order to run
+##' this on a server.
+##'
+##' @param arraynum_max Maximum SLURM array number.
+##' @param iimat matrix whose rows contain CV job indices.
+##'
+##' @export
+make_iilist <- function(arraynum_max, iimat){
+  iimax = nrow(iimat)
+  if(arraynum_max > iimax){
+    iilist = lapply(1:iimax, function(a)a)
+  } else {
+    ends = round(seq(from=0, to=iimax, length=arraynum_max+1))
+    iilist = Map(function(a,b){ (a+1):b}, ends[-length(ends)], ends[-1])
+    stopifnot(length(unlist(iilist)) == nrow(iimat))
+  }
+  stopifnot(length(unlist(iilist)) == nrow(iimat))
+  stopifnot(all(sort(unique(unlist(iilist))) == sort(unlist(iilist))))
+  return(iilist)
+}
+
+```
