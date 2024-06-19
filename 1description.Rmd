@@ -8,8 +8,8 @@ usethis::create_package(
   fields = list(
     Package = params$package_name,
     Version = "0.0.0.9000",
-    Title = "flowtrend",
-    Description = "Time-smooth mixture modeling for flow cytometry data.",
+    Title = "simplement",
+    Description = "Helpers for simulations and numerical experiments.",
     `Authors@R` = person(
       given = "Sangwon",
       family = "Hyun",
@@ -21,13 +21,13 @@ usethis::create_package(
 usethis::use_mit_license(copyright_holder = "Sangwon Hyun")
 ```
 
-The following is what will show up when someone types `package?flowtrend` in
+The following is what will show up when someone types `package?simplement` in
 the console.
 
 ```{package_doc}
-#' flowtrend
+#' simplement
 #'
-#' This package implements the `flowtrend` method for automatic gating of flow cytometry data using trend filtering.
+#' This package contains helpers for simulations and numerical experiments.
 #' 
 #' @docType package
 ```
@@ -41,7 +41,5 @@ library(ggplot2)
 usethis::use_package("tidyverse", type = "depends") 
 usethis::use_package("ggplot2")
 usethis::use_pipe()
-usethis::use_package("glmnet")
-usethis::use_package("clue")
 ```
 

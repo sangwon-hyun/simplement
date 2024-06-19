@@ -1,9 +1,9 @@
 Package: simplement
-Title: flowtrend
+Title: simplement
 Version: 0.0.0.9000
 Authors@R: 
     person("Sangwon", "Hyun", , "sangwonh@ucsc.edu", role = c("aut", "cre"))
-Description: Time-smooth mixture modeling for flow cytometry data.
+Description: Helpers for simulations and numerical experiments.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -11,9 +11,7 @@ RoxygenNote: 7.2.3
 Depends: 
     tidyverse
 Imports: 
-    clue,
     ggplot2,
-    glmnet,
     magrittr
 LitrVersionUsed: 0.9.2
-LitrId: f97ad2b2ab18cb3d9036330f04494472
+LitrId: fcf8bbe231cb80188baf7b75ffbe2655

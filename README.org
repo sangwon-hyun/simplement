@@ -1,0 +1,18 @@
+#+title: simplement: helper functions for simulations and numerical experiments
+
+
+This directory contains code that directly generates a software package called
+~simplement~, using [[https://github.com/jacobbien/litr-project][litr]]. Each R Markdown document in this directory -- called
+~1description.Rmd~, ~2helpers-data.Rmd~, and so forth -- contain code that
+directly builds the R package.
+
+The resulting "knitted" documentation from these files is [[https://htmlpreview.github.io/?https://github.com/sangwon-hyun/flowtrend/blob/main/_book/index.html][here]], and..
+
+The resulting R package is in the subdirectory [[./simplement]], and can be
+installed as follows.
+
+#+begin_src R
+remotes::install_github("sangwon-hyun/simplement", subdir = "simplement")
+#+end_src
+
+The repository is currently private.

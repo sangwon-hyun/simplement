@@ -1,6 +1,6 @@
-#' flowtrend
+#' simplement
 #'
-#' This package implements the `flowtrend` method for automatic gating of flow cytometry data using trend filtering.
+#' This package contains helpers for simulations and numerical experiments.
 #' 
 #' @docType package
 #' @keywords internal

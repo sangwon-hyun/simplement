@@ -141,8 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-3"><a href="package-setup.html#cb2-3" tabindex="-1"></a>  <span class="at">fields =</span> <span class="fu">list</span>(</span>
 <span id="cb2-4"><a href="package-setup.html#cb2-4" tabindex="-1"></a>    <span class="at">Package =</span> params<span class="sc">$</span>package_name,</span>
 <span id="cb2-5"><a href="package-setup.html#cb2-5" tabindex="-1"></a>    <span class="at">Version =</span> <span class="st">"0.0.0.9000"</span>,</span>
-<span id="cb2-6"><a href="package-setup.html#cb2-6" tabindex="-1"></a>    <span class="at">Title =</span> <span class="st">"flowtrend"</span>,</span>
-<span id="cb2-7"><a href="package-setup.html#cb2-7" tabindex="-1"></a>    <span class="at">Description =</span> <span class="st">"Time-smooth mixture modeling for flow cytometry data."</span>,</span>
+<span id="cb2-6"><a href="package-setup.html#cb2-6" tabindex="-1"></a>    <span class="at">Title =</span> <span class="st">"simplement"</span>,</span>
+<span id="cb2-7"><a href="package-setup.html#cb2-7" tabindex="-1"></a>    <span class="at">Description =</span> <span class="st">"Helpers for simulations and numerical experiments."</span>,</span>
 <span id="cb2-8"><a href="package-setup.html#cb2-8" tabindex="-1"></a>    <span class="st">`</span><span class="at">Authors@R</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">person</span>(</span>
 <span id="cb2-9"><a href="package-setup.html#cb2-9" tabindex="-1"></a>      <span class="at">given =</span> <span class="st">"Sangwon"</span>,</span>
 <span id="cb2-10"><a href="package-setup.html#cb2-10" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"Hyun"</span>,</span>
@@ -152,11 +152,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-14"><a href="package-setup.html#cb2-14" tabindex="-1"></a>  )</span>
 <span id="cb2-15"><a href="package-setup.html#cb2-15" tabindex="-1"></a>)</span>
 <span id="cb2-16"><a href="package-setup.html#cb2-16" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_mit_license</span>(<span class="at">copyright_holder =</span> <span class="st">"Sangwon Hyun"</span>)</span></code></pre></div>
-<p>The following is what will show up when someone types <code>package?flowtrend</code> in
+<p>The following is what will show up when someone types <code>package?simplement</code> in
 the console.</p>
-<pre class="package_doc"><code>#' flowtrend
+<pre class="package_doc"><code>#' simplement
 #'
-#' This package implements the `flowtrend` method for automatic gating of flow cytometry data using trend filtering.
+#' This package contains helpers for simulations and numerical experiments.
 #' 
 #' @docType package</code></pre>
 <p>This package will have some dependancies:</p>
@@ -164,9 +164,7 @@ the console.</p>
 <span id="cb4-2"><a href="package-setup.html#cb4-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb4-3"><a href="package-setup.html#cb4-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"tidyverse"</span>, <span class="at">type =</span> <span class="st">"depends"</span>) </span>
 <span id="cb4-4"><a href="package-setup.html#cb4-4" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb4-5"><a href="package-setup.html#cb4-5" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_pipe</span>()</span>
-<span id="cb4-6"><a href="package-setup.html#cb4-6" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"glmnet"</span>)</span>
-<span id="cb4-7"><a href="package-setup.html#cb4-7" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"clue"</span>)</span></code></pre></div>
+<span id="cb4-5"><a href="package-setup.html#cb4-5" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_pipe</span>()</span></code></pre></div>
 
 </div>
             </section>
